@@ -19,6 +19,7 @@ arduino = Serial('/dev/ttyACM0',9600)
 Error_sent= " "
 count = 0
 Error = 0
+
 GPIO.setmode(GPIO.BOARD)
 
 camera = PiCamera()
@@ -29,10 +30,9 @@ rawCapture = PiRGBArray(camera, size=(640, 360))
 time.sleep(0.1)
 
 
-
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):	
     image = frame.array
-    roi = image[200:250, 0:639]
+    roi = image[200:250, 0:639]   #region of interest
     bgr_arr = np.array(image)
     blue_arr = bgr_arr[:,:,0]
     ret, Whiteline = cv2.threshold(blue_arr,50,100, cv2.THRESH_BINARY)
@@ -47,7 +47,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     if len(contours_white) > 0 :
 	x1,y1,w1,h1 = cv2.boundingRect(contours_white[0])
         if (x1 >= 0 and y1>=0 and w1 >=0 and h1>=0 ):
-	    
 	    cv2.line(image, (x1+int(w1/2), 200), (x1+int(w1/2), 250),(255,0,0),3)
 	    midpoint = 320
 	    Error = (x1 + int(w1/2)) - midpoint
