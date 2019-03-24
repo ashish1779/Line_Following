@@ -1,7 +1,7 @@
 /* Line Follow using Image processing
   Arduino code
   Data getting from python script
-  Processed in arduino arduino for PID
+  Processed in arduino for PID
   //Ashish_Anand
 */
 
